@@ -1,7 +1,1038 @@
 <!DOCTYPE html>
+
 <html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Anh Nguyen Duc" />
+
+
+<title>PRROC Gating - NMA</title>
+
+<script src="1_PRROC_Gating_NMA_files/header-attrs-2.14/header-attrs.js"></script>
+<script src="1_PRROC_Gating_NMA_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="1_PRROC_Gating_NMA_files/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
+<script src="1_PRROC_Gating_NMA_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="1_PRROC_Gating_NMA_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="1_PRROC_Gating_NMA_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="1_PRROC_Gating_NMA_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="1_PRROC_Gating_NMA_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="1_PRROC_Gating_NMA_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="1_PRROC_Gating_NMA_files/navigation-1.1/tabsets.js"></script>
+<link href="1_PRROC_Gating_NMA_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="1_PRROC_Gating_NMA_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="1_PRROC_Gating_NMA_files/kePrint-0.0.1/kePrint.js"></script>
+<link href="1_PRROC_Gating_NMA_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">PRROC Gating - NMA</h1>
+<h4 class="author">Anh Nguyen Duc</h4>
+<h4 class="date">20 February, 2023</h4>
+
+</div>
+
+
+<div id="utility-functions" class="section level2" number="0.1">
+<h2><span class="header-section-number">0.1</span> Utility
+functions</h2>
+<pre class="r"><code>wald.ci &lt;- function(x, n, ci.lev=.95) {
+  p &lt;- x/n
+  se&lt;- sqrt(p*(1-p)/n)
+  z &lt;- qnorm((1+ci.lev)/2) %&gt;% abs
+  p + c(-1,1)*z*se
+}
+#-------------------------------------------------------------------------------
+lor.sd &lt;- function(s1, n1, s2, n2) { 
+# get log OR and SD
+  f1 &lt;- n1 - s1
+  f2 &lt;- n2 - s2
+# x - matrix of two columns of successes (s) and failures (f)
+  x &lt;- rbind(c(s1, f1), 
+             c(s2, f2))
+  D &lt;- factor(c(&quot;s&quot;,&quot;f&quot;), levels=c(&quot;f&quot;,&quot;s&quot;))
+  m &lt;- glm(x~D, family=binomial) %&gt;% summary
+  m$coefficients[2,1:2]
+}
+#-------------------------------------------------------------------------------
+lhr.sd &lt;- function(hr, low, upp) {
+# approx log HR and SD 
+  loghr &lt;- log(hr)
+  sd &lt;- ((log(c(low,upp)) - loghr) / qnorm(.975)) %&gt;% abs %&gt;% sqrt %&gt;% mean
+  return(c(&quot;loghr&quot;=loghr, &quot;sd&quot;=sd))
+}</code></pre>
+</div>
+<div id="load-data" class="section level2" number="0.2">
+<h2><span class="header-section-number">0.2</span> Load data</h2>
+<pre class="r"><code>data.raw &lt;- readxl::read_xlsx(path = &#39;PRROC.xlsx&#39;, range = cell_cols(&#39;A:L&#39;))
+data.use &lt;- data.raw %&gt;% dplyr::filter(one_class_mod==&#39;Y&#39;)
+
+data.use %&gt;% kbl() %&gt;% kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+study
+</th>
+<th style="text-align:right;">
+res_a
+</th>
+<th style="text-align:right;">
+n_a
+</th>
+<th style="text-align:right;">
+res_b
+</th>
+<th style="text-align:right;">
+n_b
+</th>
+<th style="text-align:right;">
+hr_pfs_ab
+</th>
+<th style="text-align:right;">
+hr_pfs_low
+</th>
+<th style="text-align:right;">
+hr_pfs_upp
+</th>
+<th style="text-align:right;">
+code_a
+</th>
+<th style="text-align:right;">
+code_b
+</th>
+<th style="text-align:left;">
+one_class_mod
+</th>
+<th style="text-align:left;">
+des
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+0.570
+</td>
+<td style="text-align:right;">
+0.330
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+Konstantinopoulos PA, Lancet Oncol. 2020
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:right;">
+0.350
+</td>
+<td style="text-align:right;">
+0.900
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+Lheureux S, Lancet. 2021
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+248
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+118
+</td>
+<td style="text-align:right;">
+0.980
+</td>
+<td style="text-align:right;">
+0.730
+</td>
+<td style="text-align:right;">
+1.310
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+ESMO 2019
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+221
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+221
+</td>
+<td style="text-align:right;">
+1.057
+</td>
+<td style="text-align:right;">
+0.854
+</td>
+<td style="text-align:right;">
+1.309
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+CORAIL
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+179
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+182
+</td>
+<td style="text-align:right;">
+0.420
+</td>
+<td style="text-align:right;">
+0.320
+</td>
+<td style="text-align:right;">
+0.530
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+AURELIA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+119
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+114
+</td>
+<td style="text-align:right;">
+1.500
+</td>
+<td style="text-align:right;">
+1.200
+</td>
+<td style="text-align:right;">
+1.900
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Y
+</td>
+<td style="text-align:left;">
+NINJA
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ns &lt;- data.use %&gt;% nrow
+y  &lt;- se &lt;- matrix(NA, ncol=2, nrow=ns)
+
+for (i in 1:ns) {
+  s1 &lt;- data.use$res_a[i]
+  n1 &lt;- data.use$n_a[i]
+  
+  s2 &lt;- data.use$res_b[i]
+  n2 &lt;- data.use$n_b[i]  
+  
+  hr &lt;- data.use$hr_pfs_ab[i]
+  low&lt;- data.use$hr_pfs_low[i]
+  upp&lt;- data.use$hr_pfs_upp[i]
+
+  lor_sd &lt;- lor.sd(s1,n1,s2,n2)
+  lhr_sd &lt;- lhr.sd(hr,low,upp)
+  
+  y[i,1:2]  &lt;- c(lor_sd[1], lhr_sd[1])
+  se[i,1:2] &lt;- c(lor_sd[2], lhr_sd[2])
+} # end of for (i in 1:ns)
+
+## Naive linear plot
+symbols(x=y[,1], y=y[,2], circle = (data.use$n_a+data.use$n_b)/pi, inches=1/3,
+        ann=T, bg=&#39;steelblue2&#39;, fg=NULL, xlab=&#39;LOR&#39;, ylab=&#39;LHR&#39;)
+
+lm(y[,2]~y[,1]) %&gt;% abline(col=&#39;red&#39;, lwd=2)</code></pre>
+<p><img src="1_PRROC_Gating_NMA_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="winbugs-model-for-one-treatment-class" class="section level2"
+number="0.3">
+<h2><span class="header-section-number">0.3</span> WinBUGs model for one
+treatment class</h2>
+<p>This is based on formulae (1) and (2) of <a
+href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7065251/"
+class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7065251/</a></p>
+<pre class="r"><code>### Model definition 
+bvnma_one_class_model &lt;- function() {
+## Data to be specify in the input
+#-------------------------------------------------------------------------------
+# ns    - number of studies
+# y     - ns x 2 matrix, each row shows the treatment effect in the surrogate endpoint (1st element) and main endpoint (2nd element)
+# se    - ns x 2 matrix, each row shows the (study-specific) se of the surrogate (1st element) and main endpoint (2nd element)
+  
+## Parameter to be monitored
+# mu1
+  
+## Parameter to be monitored for surrogacy assessment
+# lambda0     - intercept, ideally being 0
+# lambda1     - slope, ideally &gt;&lt; 0
+# big.psi.sq  - conditional variance, ideally being 0
+#-------------------------------------------------------------------------------
+  
+  # within study precision matrix
+  for(i in 1:ns) {
+    prec_w[i,1:2,1:2] &lt;- inverse(Sigma[i,1:2,1:2])
+    # covariance matrix for the i-th study
+    Sigma[i,1,1] &lt;- pow(se[i,1], 2)
+    Sigma[i,2,2] &lt;- pow(se[i,2], 2)
+    Sigma[i,1,2] &lt;- se[i,1] * se[i,2] * rho_w#[i]
+    Sigma[i,2,1] &lt;- se[i,1] * se[i,2] * rho_w    
+  }
+  
+  # Random effects model
+  for(i in 1:ns) {
+    y[i,1:2] ~ dmnorm(mu[i,1:2], prec_w[i,1:2,1:2])   
+    
+    # product normal formulation for the between study part
+    mu[i,1] &lt;- mu1[i]
+    mu1[i]  ~ dnorm(0, a)
+    # mu[i,1] &lt;- dnorm(0, a)  
+    mu[i,2] ~ dnorm(tmp[i], inv.big.psi.sq)
+    tmp[i]  &lt;- lambda0 + lambda1 * mu1[i]
+    # tmp[i]  &lt;- lambda0 + lambda1 * mu[i,1]
+    
+    #rho_w[i] &lt;- dunif(-1, 1)
+
+  } # end of for(i in 1:ns)
+  
+  lambda0 ~ dnorm(0, a)
+  lambda1 ~ dnorm(0, a)
+  inv.big.psi.sq &lt;- 1/ big.psi.sq # putting 1/big.psi.sq directly into dnorm(,) not work!
+  big.psi.sq &lt;- abs(tmp2)
+  tmp2 ~ dnorm(0, b)# dnorm(0, b)I(0,) # the latter form does not work!
+  rho_w ~ dunif(-1,1) #-.05 #dunif(-1,1) # giving rho_w prior either not work or not converge
+  a &lt;- 0.001
+  b &lt;- 2
+  
+  # # predict Y2 for given Y1
+  # for(i in 1:nn) { #nn is number of new y1n
+  #   y2n ~ dnorm(mu2n, pre2n)
+  #   m2n &lt;- mu
+  # }
+
+} # end of bvnma_one_class_model
+
+write.model(bvnma_one_class_model, &#39;bvnma_one_class_model.bug&#39;)
+
+### Parameters to monitor
+parameters_one_class_model &lt;- c(&#39;mu1&#39;, &#39;lambda0&#39;, &#39;lambda1&#39;,&#39;big.psi.sq&#39;, &#39;rho_w&#39;)
+
+# ns &lt;- 5 # number of studies
+
+### Inits
+inits_one_class_model &lt;- function() {
+
+  list(
+    &quot;mu1&quot;= rnorm(ns, 0, 1),
+    # &quot;mu&quot;= c(rnorm(5, 0, 1), rep(NA, 5)) %&gt;% matrix(nrow=5, byrow = F),
+    &quot;lambda0&quot;= rnorm(1, 0, 1),
+    &quot;lambda1&quot;= rnorm(1, 0, 1),
+    &quot;big.psi.sq&quot;= rnorm(1, 0, 1) %&gt;% abs,
+    # rho_w=runif(5, -1, 1)
+    &quot;rho_w&quot;=runif(1, -1, 1)
+    )  
+} # end of inits_one_class_model
+
+### Data
+# data_one_class_model &lt;- list(
+#   &quot;ns&quot;=ns,
+#   &quot;y&quot;=c(1.46, 2.17, 1.1, 2.22, 0.58, 1.29, 1.41, 2.63, 1.36, 3) %&gt;%  matrix(nrow=ns, byrow = T),
+#   &quot;se&quot;= c(.24, .21, .23, .2, .23, .22, .22, .25, .19, .2) %&gt;%  matrix(nrow=ns, byrow = T)
+# )
+data_one_class_model &lt;- list(ns=ns, y=y, se= se)
+
+### Run MCMC
+set.seed(36)
+bvnma_one_class_bug &lt;- bugs(data = data_one_class_model, inits = 
+                            inits_one_class_model, parameters.to.save = 
+                            parameters_one_class_model, 
+                            model.file = &quot;bvnma_one_class_model.bug&quot;,
+                            n.chains=3, n.iter=20e4,
+                            clearWD=T, bugs.directory=&quot;C:/Users/nguyea37/Documents/WinBUGS14&quot;)
+print(bvnma_one_class_bug)</code></pre>
+<pre><code>## Inference for Bugs model at &quot;bvnma_one_class_model.bug&quot;, fit using WinBUGS,
+##  3 chains, each with 2e+05 iterations (first 1e+05 discarded), n.thin = 300
+##  n.sims = 1002 iterations saved
+##            mean  sd 2.5%  25%  50%  75% 97.5% Rhat n.eff
+## mu1[1]     -0.9 1.1 -3.1 -1.6 -0.8  0.0   1.1    1   520
+## mu1[2]      1.5 0.7  0.1  1.0  1.4  1.9   2.9    1  1000
+## mu1[3]      0.7 0.3  0.1  0.5  0.7  0.9   1.3    1  1000
+## mu1[4]      0.2 0.3 -0.4  0.0  0.2  0.3   0.7    1   730
+## mu1[5]      1.1 0.3  0.5  0.9  1.1  1.3   1.6    1  1000
+## mu1[6]     -0.6 0.4 -1.4 -0.9 -0.6 -0.3   0.3    1   490
+## lambda0    -0.1 0.3 -0.8 -0.3 -0.1  0.1   0.6    1  1000
+## lambda1    -0.3 0.4 -1.2 -0.5 -0.2  0.0   0.4    1  1000
+## big.psi.sq  0.3 0.3  0.0  0.1  0.3  0.5   1.2    1  1000
+## rho_w       0.0 0.6 -0.9 -0.4  0.0  0.5   0.9    1   550
+## deviance   10.3 6.8 -5.2  7.4 10.7 13.8  23.1    1   580
+## 
+## For each parameter, n.eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).
+## 
+## DIC info (using the rule, pD = Dbar-Dhat)
+## pD = 7.5 and DIC = 17.8
+## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
+<pre class="r"><code>plot(bvnma_one_class_bug)</code></pre>
+<p><img src="1_PRROC_Gating_NMA_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># ### Convergence diagnostic plot
+# mcmcplots::mcmcplot(bvnma_one_class_bug)
+
+### Credible interval for selected parameters
+mcmcplots::caterplot(bvnma_one_class_bug, parms = c(&#39;lambda0&#39;, &#39;lambda1&#39;,&#39;big.psi.sq&#39;))</code></pre>
+<p><img src="1_PRROC_Gating_NMA_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code>### Density plot for selected parameters
+mcmcplots::denplot(bvnma_one_class_bug, parms = c(&#39;lambda0&#39;, &#39;lambda1&#39;,&#39;big.psi.sq&#39;))</code></pre>
+<p><img src="1_PRROC_Gating_NMA_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<pre class="r"><code># ### Convert Bug obj to MCMC obj so more function can work with
+# bvnma_one_class_mcmc &lt;- bvnma_one_class_bug %&gt;% as.mcmc.bugs
+# 
+# bvnma_one_class_mcmc %&gt;% geweke.plot
+# 
+# bvnma_one_class_mcmc %&gt;% gelman.plot
+# 
+# bvnma_one_class_mcmc %&gt;% autocorr.plot
+# 
+# bvnma_one_class_bug %&gt;% autoplot</code></pre>
+<!-- ## WinBUGS model for model 1b with second order consistency constraint -->
+<!-- This is based on model 1b of https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6618064/#sim8187-disp-0007. -->
+<!-- This is just for testing and might not be suitable for current number of studies. -->
+<!-- ```{r echo=TRUE} -->
+<!-- ### Model definition  -->
+<!-- bvnma_1b_model <- function() { -->
+<!-- ## Data to be specify in the input -->
+<!-- #------------------------------------------------------------------------------- -->
+<!-- # ns    - number of studies -->
+<!-- # nt    - number of treatments, nt2=nt*2 (size of the Gamma matrix) -->
+<!-- # nc    - number of contrasts -->
+<!-- # td    - list of contrasts  -->
+<!-- # t     - ns x 2 matrix, each row shows the numeric index of treatment e.g. (1,2) or (1,3) with 1 being the common reference -->
+<!-- # tc    - ns-length vector, each element is the numeric code for the resp. pair of treatment in t -->
+<!-- # y     - ns x 2 matrix, each row shows the treatment effect in the surrogate endpoint (1st element) and main endpoint (2nd element) -->
+<!-- # se    - ns x 2 matrix, each row shows the (study-specific) se of the surrogate (1st element) and main endpoint (2nd element) -->
+<!-- # rho_w - ns-length vector  each element is the within-study correlation between the surrogate and primary endpoint. This could be either study-specific or assumed to be the same for all studies. -->
+<!-- ## Parameter to be monitored -->
+<!-- # d, delta, psi, L.u -->
+<!-- ## Parameter to be monitored for surrogacy assessment -->
+<!-- # lambda0     - intercept, ideally being 0 -->
+<!-- # lambda1     - slope, ideally >< 0 -->
+<!-- # big.psi.sq  - conditional variance, ideally being 0 -->
+<!-- #------------------------------------------------------------------------------- -->
+<!-- ## Data to be specify in the input -->
+<!-- #------------------------------------------------------------------------------- -->
+<!-- # ns    - number of studies -->
+<!-- # nt    - number of treatments, nt2=nt*2 (size of the Gamma matrix) -->
+<!-- # nc    - number of contrasts -->
+<!-- # td    - list of contrasts  -->
+<!-- # t     - ns x 2 matrix, each row shows the numeric index of treatment e.g. (1,2) or (1,3) with 1 being the common reference -->
+<!-- # tc    - ns-length vector, each element is the numeric code for the resp. pair of treatment in t -->
+<!-- # y     - ns x 2 matrix, each row shows the treatment effect in the surrogate endpoint (1st element) and main endpoint (2nd element) -->
+<!-- # se    - ns x 2 matrix, each row shows the (study-specific) se of the surrogate (1st element) and main endpoint (2nd element) -->
+<!-- # rho_w - ns-length vector  each element is the within-study correlation between the surrogate and primary endpoint. This could be either study-specific or assumed to be the same for all studies. -->
+<!-- ## Parameter to be monitored -->
+<!-- # d, delta, psi, L.u -->
+<!-- ## Parameter to be monitored for surrogacy assessment -->
+<!-- # lambda0     - intercept, ideally being 0 -->
+<!-- # lambda1     - slope, ideally >< 0 -->
+<!-- # big.psi.sq  - conditional variance, ideally being 0 -->
+<!-- #------------------------------------------------------------------------------- -->
+<!--   for(i in 1:ns) { -->
+<!--     prec_w[i,1:2,1:2] <- inverse(Sigma[i,1:2,1:2]) -->
+<!--     # covariance matrix for the j-th study -->
+<!--     Sigma[i,1,1]<-pow(se[i,1],2) -->
+<!--     Sigma[i,2,2]<-pow(se[i,2],2) -->
+<!--     Sigma[i,1,2]<-sqrt(Sigma[i,1,1])*sqrt(Sigma[i,2,2])*rho_w[i] -->
+<!--     Sigma[i,2,1]<-sqrt(Sigma[i,1,1])*sqrt(Sigma[i,2,2])*rho_w[i] -->
+<!--     y[i,1:2] ~ dmnorm(delta[i,1:2],prec_w[i,1:2,1:2]) -->
+<!--     delta[i,1:2] ~ dmnorm(md[i,1:2],prec_b[i,1:2,1:2]) # trial-specific treat effects distributions -->
+<!--     for(j in 1:2) { -->
+<!--     md[i,j] <- d[t[i,2],j] - d[t[i,1],j] # mean of treat effects distributions -->
+<!--     } -->
+<!--     prec_b[i,1:2,1:2]<-inverse(Cov_b[tc[i],,]) -->
+<!--   } # end of for(i in 1:ns) -->
+<!--   for (ic in 1:nc){ -->
+<!--     for (j in 1:2) { -->
+<!--       Cov_b[ic,j,j]<-tau.sq[ic,j] -->
+<!--       tau.sq[ic,j]<-psi.sq[(td[ic,1]-1)*2+j]+psi.sq[(td[ic,2]-1)*2+j] -->
+<!--       -2*rho_psi[(td[ic,1]-1)*2+j,(td[ic,2]-1)*2+j]*psi[(td[ic,1]-1)*2+j]*psi[(td[ic,2]-1)*2+j] -->
+<!--     } # end of for (j in 1:2) -->
+<!--     Cov_b[ic,1,2]<- psi[(td[ic,1]-1)*2+1]*psi[(td[ic,1]-1)*2+2]*rho_psi[(td[ic,1]-1)*2+1,(td[ic,1]-1)*2+2] -->
+<!--     -psi[(td[ic,1]-1)*2+1]*psi[(td[ic,2]-1)*2+2]*rho_psi[(td[ic,1]-1)*2+1,(td[ic,2]-1)*2+2] -->
+<!--     -psi[(td[ic,2]-1)*2+1]*psi[(td[ic,1]-1)*2+2]*rho_psi[(td[ic,2]-1)*2+1,(td[ic,1]-1)*2+2] -->
+<!--     +psi[(td[ic,2]-1)*2+1]*psi[(td[ic,2]-1)*2+2]*rho_psi[(td[ic,2]-1)*2+1,(td[ic,2]-1)*2+2] -->
+<!--     Cov_b[ic,2,1]<-Cov_b[ic,1,2] -->
+<!--     rho_b[ic]<-Cov_b[ic,1,2]/sd[ic,1]/sd[ic,2] -->
+<!--     sd[ic,1]<-sqrt(tau.sq[ic,1]) -->
+<!--     sd[ic,2]<-sqrt(tau.sq[ic,2]) -->
+<!--     lambda0[ic]<- (d[td[ic,2],2]-d[td[ic,1],2]) -->
+<!--     - (d[td[ic,2],1]-d[td[ic,1],1]) *rho_b[ic]* sd[ic,2]/sd[ic,1] -->
+<!--     # added by Anh for surrogacy assessment  -->
+<!--     lambda1[ic]    <- rho_b[ic] * sd[ic,2]/sd[ic,1] -->
+<!--     big.psi.sq[ic] <- tau.sq[ic,2] - pow(lambda1[ic], 2) * tau.sq[ic,1] -->
+<!--   } # end of for (ic in 1:nc) -->
+<!--   for(j in 1:2) {d[1,j] <- 0} -->
+<!--   for (k in 1:nt2){ -->
+<!--     psi[k]~dunif(0,2) -->
+<!--     psi.sq[k]<-pow(psi[k],2) -->
+<!--     rho_psi[k,k]<-1 -->
+<!--   } -->
+<!--   for (k in 2:nt){ -->
+<!--     d[k,1] ~ dnorm(0,0.001) -->
+<!--     d[k,2] ~ dnorm(0,0.001) -->
+<!--   } -->
+<!--   # assigning priors to the upper triangular matrix in Cholesky decomposition -->
+<!--   L[1,1]<-1.0 -->
+<!--   for (k in 2:nt2){ -->
+<!--     L.u[1,k]~dunif(-0.999,0.999) -->
+<!--       L[1,k] <- L.u[1,k] -->
+<!--   } -->
+<!--   for (x in 1:nt2-1){ -->
+<!--     for (k in x+1:nt2){ -->
+<!--       p[x,k]<-pow(L[x,k],2) -->
+<!--     } -->
+<!--   } -->
+<!--   for (x in 3:nt2){ -->
+<!--     for (k in x:nt2){ -->
+<!--       s[x-1,k]<-sum(p[1:x-2,k]) -->
+<!--       lim[x-1,k]<- sqrt(1-s[x-1,k]) -->
+<!--       L.u[x-1,k]~dunif(-0.999,0.999) -->
+<!--       L[x-1,k]<- lim[x-1,k] * L.u[x-1,k] -->
+<!--     } -->
+<!--   } -->
+<!--   L.u[2,2]<-sqrt(1-pow(L[1,2],2)) -->
+<!--   L[2,2]<-L.u[2,2] -->
+<!--   for (k in 3:nt2){ -->
+<!--     s2[k]<-sum(p[1:k-1,k]) -->
+<!--     L.u[k,k]<-sqrt(1-s2[k]) -->
+<!--     L[k,k]<-L.u[k,k] -->
+<!--   } -->
+<!--   #assigning values for the correlations: -->
+<!--   for (k in 2:nt2){ -->
+<!--     rho_psi[1,k]<-L[1,k] -->
+<!--     rho_psi[k,1]<-L[1,k] -->
+<!--   } -->
+<!--   for (x in 2:nt2-1){ -->
+<!--     for (k in x+1:nt2){ -->
+<!--       for (j in 1:x){ -->
+<!--         LL[j,x,k]<-L[j,x]*L[j,k] -->
+<!--       } -->
+<!--     } -->
+<!--   } -->
+<!--   for (x in 2:nt2-2){ -->
+<!--     for (k in x+1:nt2){ -->
+<!--       rho_psi[x,k]<-sum(LL[1:x,x,k]) -->
+<!--       rho_psi[k,x]<-rho_psi[x,k] -->
+<!--     } -->
+<!--   } -->
+<!--   rho_psi[nt2-1,nt2]<- sum(LL[1:nt2-1,nt2-1,nt2]) -->
+<!--   rho_psi[nt2,nt2-1]<- rho_psi[nt2-1,nt2] -->
+<!--   # parameter for surrogacy assessment -->
+<!-- } # end of bvnma_1b_model -->
+<!-- write.model(bvnma_1b_model, 'bvnma_1b_model.bug') -->
+<!-- ### Parameters -->
+<!-- parameters <- c('lambda0', 'lambda1','big.psi.sq' , 'd', 'delta', 'psi', 'L.u') -->
+<!-- ### initial values -->
+<!-- # inits <- list( -->
+<!-- #   d= structure(.Data= c(NA,NA, 0.5, 0.5, 0.5, 0.5), .Dim=c(3, 2)), -->
+<!-- #   delta= structure(.Data= c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,0.5, -->
+<!-- #                             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -->
+<!-- #                             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -->
+<!-- #                             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -->
+<!-- #                             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -->
+<!-- #                             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5), -->
+<!-- #                    .Dim=c(30, 2) -->
+<!-- #                    ), -->
+<!-- #   psi=c(0.5, 0.5, 0.5, 0.5, 0.5, 0.5), -->
+<!-- #   L.u= structure(.Data= c(NA, 0.2, 0.2, 0.2, 0.2, 0.2,  -->
+<!-- #                           NA, NA,  0.2, 0.2, 0.2, 0.2, -->
+<!-- #                           NA, NA,  NA,  0.2, 0.2, 0.2,  -->
+<!-- #                           NA, NA,  NA,  NA,  0.2, 0.2, -->
+<!-- #                           NA, NA,  NA,  NA,  NA,  0.2,  -->
+<!-- #                           NA, NA,  NA,  NA,  NA,  NA),  -->
+<!-- #                  .Dim=c(6, 6) -->
+<!-- #                  ) -->
+<!-- #   ) -->
+<!-- inits <- function() { -->
+<!--   L.u <- matrix(NA, nrow=6, ncol=6) -->
+<!--   L.u[upper.tri(L.u)] <- runif(15, 0.001, 1)#runif(1, 0.001, 1) -->
+<!--   list( -->
+<!--     d= structure(.Data= c(NA,NA, runif(4, 0, 1) ), .Dim=c(3, 2)), -->
+<!--     #d= structure(.Data= c(NA,NA, runif(1, 0, 1) %>% rep(4)), .Dim=c(3, 2)), -->
+<!--     delta= runif(60, 0, 1) %>% matrix(nrow=30), -->
+<!--     #runif(1, 0, 1) %>% rep(60) %>% matrix(nrow=30), -->
+<!--     psi=runif(6, 0.001, 1),# %>% rep(6), -->
+<!--     L.u=L.u -->
+<!--     )   -->
+<!-- } -->
+<!-- ### data -->
+<!-- data <- list( -->
+<!--   ns=30, nt=3, nt2=6, nc=3,  -->
+<!--   td= structure(.Data= c(1, 2, 2, 3, 1, 3), .Dim=c(3, 2)), -->
+<!--   # td= rbind(structure(.Data= c(1, 2, 2, 3, 1, 3), .Dim=c(3, 2)), c(1,1)), -->
+<!--   t = rbind(rep(c(1,2), each=10) %>% matrix(nrow=10), -->
+<!--             rep(c(2,3), each=10) %>% matrix(nrow=10), -->
+<!--             rep(c(1,3), each=10) %>% matrix(nrow=10)#, -->
+<!--             # rep(c(1,3), each=5) %>% matrix(nrow=5), -->
+<!--             # rep(c(1,1), each=5) %>% matrix(nrow=5)             -->
+<!--             ), -->
+<!--   tc= rep(1:3, each=10), -->
+<!--   y = c(1.46, 2.17, 1.1, 2.22, 0.58, 1.29, 1.41, 2.63, 1.36, 3, 0.86, 1.68, 1.24, 2.25, 0.6, 1.13, .91, 1.7, 1.59, 2.67, 2.12, 1.02, 1.58, .84, 1.82, .99, 2.35, 1.34, 1.76, .59, 2.57, 1.41, 2.28, 1.24, 2.66, 1.44, 1.02, .63, 2.19, 1.34, 2.2, 2.25, 3.47, 3.17, 2.86, 2.49, 2.84, 3.15, 3.97, 3.63, 3.39, 3.45, 3.67, 3.84, 1.99, 2.3, 3.13, 3.24, 2.32, 2.19) %>% matrix(nrow=30, byrow = T), -->
+<!--   se= c(.24, .21, .23, .2, .23, .22, .22, .25, .19, .2, .22, .2, .19, .22, .23, .18, .23, .2, .25, .2, .21, .21, .23, .19, .2, .16, .19, .19, .22, .21) %>% rep(each=2) %>% matrix(nrow=30, byrow = T), -->
+<!--   rho_w= rep(.6, 30) -->
+<!--   ) -->
+<!-- ##### Using WinBUG -->
+<!-- ### MCMC run -->
+<!-- ## Parallelization but never stopped!! -->
+<!-- # bvnma_1b_bug <- pbugs(data, inits, parameters,  -->
+<!-- #                      model.file = "bvnma_1b_model.bug", -->
+<!-- #                      n.chains=3, n.iter=1e4, n.burnin=5e3, -->
+<!-- #                      clearWD=T,  -->
+<!-- #                      bugs.directory="C:/Users/nguyea37/Documents/WinBUGS14") -->
+<!-- bvnma_1b_bug <- bugs(data, inits, parameters,  -->
+<!--                      model.file = "bvnma_1b_model.bug", -->
+<!--                      n.chains=3, n.iter=1e4, n.burnin=5e3, -->
+<!--                      clearWD=T,  -->
+<!--                      bugs.directory="C:/Users/nguyea37/Documents/WinBUGS14") -->
+<!-- print(bvnma_1b_bug) -->
+<!-- plot(bvnma_1b_bug) -->
+<!-- ### Convergence diagnostic plot -->
+<!-- mcmcplots::mcmcplot(bvnma_1b_bug) -->
+<!-- ### Credible interval for selected parameters -->
+<!-- mcmcplots::caterplot(bvnma_1b_bug, parms = c('lambda0', 'lambda1','big.psi.sq')) -->
+<!-- ### Density plot for selected parameters -->
+<!-- mcmcplots::denplot(bvnma_1b_bug, parms = c('big.psi.sq')) -->
+<!-- ### Convert Bug obj to MCMC obj so more function can work with -->
+<!-- bvnma_1b_mcmc <- bvnma_1b_bug %>% as.mcmc.bugs -->
+<!-- bvnma_1b_mcmc %>% geweke.plot -->
+<!-- bvnma_1b_mcmc %>% gelman.plot -->
+<!-- bvnma_1b_mcmc %>% autocorr.plot -->
+<!-- bvnma_1b_bug %>% autoplot -->
+<!-- ### Get bayes factor (via Savage Dickey ratio method) for big.psi.sq i.e. conditional variance of the main endpoint given the surrogate -->
+<!-- #### Using JAGs - Currently not running -->
+<!-- bvnma_1b_jag <- jags(data, inits, parameters, -->
+<!--                       model.file = "bvnma_1b_model.bug", -->
+<!--                       n.chains=3, n.iter=1e4, n.burnin=5e3) -->
+<!-- # jags.path = "C:/Users/nguyea37/Documents/JAGS/JAGS-4.3.1/x64/bin") -->
+<!-- ``` -->
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
 </body>
 </html>
